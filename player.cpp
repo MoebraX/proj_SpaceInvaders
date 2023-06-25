@@ -56,6 +56,7 @@ void Player::keyPressEvent(QKeyEvent *event)
     }
     else if(event->key() == Qt::Key_Space)
     {
+        emit testsignal();
         Bullet *bullet = new Bullet();
         bullet->setPos(x(), y());
         scene()->addItem(bullet);

@@ -6,6 +6,8 @@
 #include <QImage>
 #include "enemy.h"
 #include <QAudioOutput>
+#include "mainmenu.h"
+#include <QTime>
 
 Game::Game(QWidget *parent)
 {
@@ -24,6 +26,7 @@ Game::Game(QWidget *parent)
 
     //create an item to put into the scene
     Player * player = new Player();
+    connect(player, &Player::testsignal, this , &Game::displayGameover);
     player ->setPos(400,500); // to always generate in the middle
     // make the player focusable and set it to be the current focus
     player->setFlag(QGraphicsItem::ItemIsFocusable);
@@ -76,56 +79,34 @@ Game::Game(QWidget *parent)
 
 }
 
-void Game::displayMainmenu()
-{
-    QGraphicsTextItem *titleText = new QGraphicsTextItem(QString("Space Invaders"));
-    QFont titleFont("comic sans", 50);
-    titleText->setFont(titleFont);
-    titleText->setDefaultTextColor(Qt::yellow);
-    int xTitlePos = this->width()/2 - titleText->boundingRect().width()/2;
-    int yTitlePos = 150;
-    titleText->setPos(xTitlePos, yTitlePos);
-    scene->addItem(titleText);
-
-    // create play button
-    Button *playButton = new Button(QString("Play"));
-    int xPlayPos = this->width()/2 - playButton->boundingRect().width()/2;
-    int yPlayPos = 275;
-    playButton->setPos(xPlayPos, yPlayPos);
-    connect(playButton, SIGNAL(clicked()), this, SLOT(start()));
-    scene->addItem(playButton);
-
-    // create settings button
-    Button *settingsButton = new Button(QString("Settings"));
-    int xSettingsPos = this->width()/2 - settingsButton->boundingRect().width()/2;
-    int ySettingsPos = 350;
-    settingsButton->setPos(xSettingsPos, ySettingsPos);
-    connect(settingsButton, SIGNAL(clicked()), this, SLOT(displaySettingsMenu()));
-    scene->addItem(settingsButton);
-
-    // create quit button
-    Button *quitButton = new Button(QString("Quit"));
-    int xQuitPos = this->width()/2 - quitButton->boundingRect().width()/2;
-    int yQuitPos = 425;
-    quitButton->setPos(xQuitPos, yQuitPos);
-    connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
-    scene->addItem(quitButton);
-}
-
 void Game::displayGameover()
 {
     //create gameover text
-
     QGraphicsTextItem *titleText = new QGraphicsTextItem(QString("Game Over"));
     QFont titleFont("comic sans", 50);
     titleText->setFont(titleFont);
     titleText->setDefaultTextColor(Qt::yellow);
     int xTitlePos = this->width()/2 - titleText->boundingRect().width()/2;
     int yTitlePos = 150;
-    titleText->setPos(xTitlePos, yTitlePos);
+    titleText->setPos(xTitlePos-10, yTitlePos-50);
     scene->addItem(titleText);
+    QGraphicsTextItem *text = new QGraphicsTextItem(QString("Press Space to return to home screen"));
+    text->setFont(QFont("comic sans", 20));
+    text->setDefaultTextColor((Qt::white));
+    text->setPos(xTitlePos,yTitlePos + 20);
+    scene->addItem(text);
 
-    // create "Retry" button
+    //Close the window
+    //TO DO: press key = close
+    QTime dieTime= QTime::currentTime().addSecs(1);
+    while (QTime::currentTime() < dieTime)
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    Mainmenu* mainmenu;
+    mainmenu=new Mainmenu;
+    mainmenu->show();
+    delete this;
+
+   /* // create "Retry" button
     Button *retryButton = new Button(QString("Retry"));
     int xRetryPos = this->width()/2 - retryButton->boundingRect().width()/2;
     int yRetryPos = 275;
@@ -147,10 +128,12 @@ void Game::displayGameover()
     quitButton->setPos(xQuitPos, yQuitPos);
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
     scene->addItem(quitButton);
+*/
+
 
 }
 
-void Game::displaySettingsMenu()
+/*void Game::displaySettingsMenu()
 {
 
     // clean up the screen
@@ -179,4 +162,4 @@ void Game::displaySettingsMenu()
     connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
     scene->addItem(quitButton);
 
-}
+}*/

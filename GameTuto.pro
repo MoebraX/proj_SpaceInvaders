@@ -22,6 +22,7 @@ SOURCES += \
     game.cpp \
     health.cpp \
     main.cpp \
+    mainmenu.cpp \
     mainwindow.cpp \
     player.cpp \
     score.cpp
@@ -32,6 +33,7 @@ HEADERS += \
     enemy.h \
     game.h \
     health.h \
+    mainmenu.h \
     mainwindow.h \
     player.h \
     score.h

@@ -18,10 +18,8 @@ class Game : public QGraphicsView
 public:
     Game(QWidget *parent = 0);
 
-    void displayMainmenu();
     void displayGameover();
-
-    void displaySettingsMenu();
+    //void displaySettingsMenu();
 
     QGraphicsScene * scene;
     Player *player;

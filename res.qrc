@@ -9,4 +9,7 @@
         <file>Invaders.png</file>
         <file>bullet.png</file>
     </qresource>
+    <qresource prefix="/fonts">
+        <file>MyGirlIsRetro-0Grz.ttf</file>
+    </qresource>
 </RCC>

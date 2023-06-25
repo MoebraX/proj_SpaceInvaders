@@ -56,8 +56,9 @@ void Player::keyPressEvent(QKeyEvent *event)
     }
     else if(event->key() == Qt::Key_Space)
     {
-        emit testsignal();
+        //emit testsignal();
         Bullet *bullet = new Bullet();
+        connect(bullet, &Bullet::increaseScore, this, &Player::increaseScoreSlot);
         bullet->setPos(x(), y());
         scene()->addItem(bullet);
         bulletSound->play();
@@ -83,4 +84,9 @@ void Player::spawn()
     Enemy *enemy = new Enemy();
     scene()->addItem(enemy);
 
+}
+
+void Player::increaseScoreSlot(int value)
+{
+    emit increaseScoreSignal(value);
 }

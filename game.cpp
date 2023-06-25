@@ -13,7 +13,7 @@ Game::Game(QWidget *parent)
 {
     //create secene
     scene = new QGraphicsScene();
-    scene->setSceneRect(0, 0, 800, 600);// make the secen 800 * 600 instead of infinity by infinity
+    scene->setSceneRect(0, 0, 800, 600);// make the secen 600 * 800 instead of infinity by infinity
     setBackgroundBrush(QBrush(QImage(":/Images/Background.png")));
 
     //make the newly created scene the scene to visualize
@@ -21,13 +21,22 @@ Game::Game(QWidget *parent)
     setScene(scene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setFixedSize(800, 600);
+    setFixedSize(800,600);
 
+
+    //Create score
+    score = new Score();
+    scene->addItem(score);
+
+    health = new Health();
+    health->setPos(health->x(), health->y() + 25);
+    scene->addItem(health);
 
     //create an item to put into the scene
     Player * player = new Player();
     connect(player, &Player::testsignal, this , &Game::displayGameover);
-    player ->setPos(400,500); // to always generate in the middle
+    connect(player, &Player::increaseScoreSignal, score, &Score::increaseScore);
+    player ->setPos(100,100); // to always generate in the middle
     // make the player focusable and set it to be the current focus
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
@@ -40,8 +49,8 @@ Game::Game(QWidget *parent)
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->show();
-    view->setFixedSize(800, 600);
-    scene->setSceneRect(0, 0, 800, 600);
+    view->setFixedSize(800,600);
+    scene->setSceneRect(0, 0, 800,600);
     QImage backgroundImage(":/Images/Background.png");
     QImage scaledImage = backgroundImage.scaled(view->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     view->setBackgroundBrush(QBrush(scaledImage));
@@ -55,14 +64,6 @@ Game::Game(QWidget *parent)
     QTimer * timer = new QTimer();
     QObject::connect(timer, SIGNAL(timeout()), player, SLOT(spawn()));
     timer->start(2000);
-
-    //Create score
-    score = new Score();
-    scene->addItem(score);
-
-    health = new Health();
-    health->setPos(health->x(), health->y() + 25);
-    scene->addItem(health);
 
     //play background
     QMediaPlayer *  music = new QMediaPlayer();

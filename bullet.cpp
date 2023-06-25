@@ -6,8 +6,6 @@
 #include "enemy.h"
 #include "game.h"
 
-extern Game * game; //there is an external global object
-
 Bullet::Bullet(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent)
 {
     //draw graphics
@@ -31,20 +29,24 @@ void Bullet::move()
 {
     // check for collision with enemies
     QList<QGraphicsItem *> colliding_items = collidingItems();
-    for(int i = 0, n = colliding_items.size(); i < n ; ++i)
+    for(auto const i : colliding_items)
     {
-        if(typeid(*(colliding_items[i])) == typeid(Enemy))
+        Enemy* hit_enemy = dynamic_cast<Enemy*>(i);
+        if(hit_enemy != nullptr)
         {
-            //increase score
-            game->score->increase();
+            //emit signal to decrease enemy's health
+            if(hit_enemy->health>1)
+                hit_enemy->health--;
 
-            //remove the enemy and bullet on the scene still on the heap
-            scene()->removeItem(colliding_items[i]);
-            scene()->removeItem(this);
 
-            delete colliding_items[i];
-            delete this;
-            return;
+            //remove enemy and bullet from heap memory
+            else{
+                emit increaseScore(hit_enemy->score_value);
+                scene()->removeItem(hit_enemy);
+                scene()->removeItem(this);
+                delete hit_enemy;
+                delete this;
+            }
         }
 
     }
@@ -60,3 +62,4 @@ void Bullet::move()
 
     }
 }
+

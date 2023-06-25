@@ -32,7 +32,7 @@ void Bullet::move()
     for(auto const i : colliding_items)
     {
         Enemy* hit_enemy = dynamic_cast<Enemy*>(i);
-        if(hit_enemy != nullptr)
+        if(hit_enemy    != nullptr)
         {
             //emit signal to decrease enemy's health
             if(hit_enemy->health>1)
@@ -41,7 +41,7 @@ void Bullet::move()
 
             //remove enemy and bullet from heap memory
             else{
-                emit increaseScore(hit_enemy->score_value);
+               // emit increaseScore(hit_enemy->score_value);
                 scene()->removeItem(hit_enemy);
                 scene()->removeItem(this);
                 delete hit_enemy;

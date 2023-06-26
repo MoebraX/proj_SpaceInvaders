@@ -1,19 +1,36 @@
-#include "game.h"
-#include "button.h"
 #include <QApplication>
 #include <QMediaPlayer>
 #include <QBrush>
 #include <QImage>
-#include "enemy.h"
 #include <QAudioOutput>
-#include "mainmenu.h"
 #include <QTime>
 
-Game::Game(QWidget *parent)
+#include "game.h"
+#include "button.h"
+#include "enemy.h"
+#include "mainmenu.h"
+
+void Game::spawnEnemies()
+{
+    Enemy* test_enemy2 = new Enemy(200,200);
+    scene->addItem(test_enemy2);
+    AlienKachal* kachal1 = new AlienKachal(200,220);
+    scene->addItem(kachal1);
+    AlienBug* bug1 = new AlienBug(200,240);
+    scene->addItem(bug1);
+    AlienOkhtapoos* okhtapoos1 = new AlienOkhtapoos(200,260);
+    scene->addItem(okhtapoos1);
+
+
+
+}
+
+
+Game::Game()
 {
     //create secene
     scene = new QGraphicsScene();
-    scene->setSceneRect(0, 0, 800, 600);// make the secen 600 * 800 instead of infinity by infinity
+    scene->setSceneRect(0, 0, 800,600);// make the secen 600 * 800 instead of infinity by infinity
     setBackgroundBrush(QBrush(QImage(":/Images/Background.png")));
 
     //make the newly created scene the scene to visualize
@@ -22,7 +39,6 @@ Game::Game(QWidget *parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFixedSize(800,600);
-
 
     //Create score
     score = new Score();
@@ -50,19 +66,17 @@ Game::Game(QWidget *parent)
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->show();
     view->setFixedSize(800,600);
-    scene->setSceneRect(0, 0, 800,600);
+    scene->setSceneRect(0,0, 800,600);
     QImage backgroundImage(":/Images/Background.png");
     QImage scaledImage = backgroundImage.scaled(view->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     view->setBackgroundBrush(QBrush(scaledImage));
-
 
 
     player->setPos(view->width()/2, view->height() - player->pixmap().height());
 
 
     //spawn enemies
-    Enemy* test_enemy = new Enemy(300,300);
-    scene->addItem(test_enemy);
+    spawnEnemies();
 
     //play background
     QMediaPlayer *  music = new QMediaPlayer();

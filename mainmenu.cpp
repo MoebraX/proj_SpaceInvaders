@@ -6,7 +6,7 @@ Mainmenu::Mainmenu()
 {
      //create secene
     mainmenu_scene = new QGraphicsScene();
-    mainmenu_scene->setSceneRect(0, 0, 600, 700);// make the secen 800 * 600 instead of infinity by infinity
+    mainmenu_scene->setSceneRect(0, 0, 800, 600);// make the secen 600*700 instead of infinity by infinity
     mainmenu_scene->setBackgroundBrush(Qt::blue);
 
     //make the newly created scene the scene to visualize
@@ -14,7 +14,7 @@ Mainmenu::Mainmenu()
     setScene(mainmenu_scene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setFixedSize(600, 700);
+    setFixedSize(800, 600);
 
     // Center the game window on the screen
     QScreen *screen = QGuiApplication::primaryScreen();

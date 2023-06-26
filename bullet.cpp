@@ -58,7 +58,7 @@ void Bullet::move()
     //Remove the bullet if it goes out of the window
     if(pos().y() + pixmap().height() < 0)
     {
-        scene()->removeItem(this);
+        //scene()->removeItem(this);
         //delete this;
 
     }

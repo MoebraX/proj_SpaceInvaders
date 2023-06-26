@@ -16,9 +16,10 @@ class Game : public QGraphicsView
 {
     Q_OBJECT
 public:
-    Game(QWidget *parent = 0);
+    Game();
 
     void displayGameover();
+    void spawnEnemies();
     //void displaySettingsMenu();
 
     QGraphicsScene * scene;

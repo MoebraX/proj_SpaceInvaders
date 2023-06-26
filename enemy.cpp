@@ -40,7 +40,7 @@ void Enemy::move()
     {
         if(pos_x-initial_x < 5*10)
         {
-            pos_x+=5;
+            pos_x+=10;
             setPos(pos_x,pos_y);
         }
         else if(pos_x-initial_x >= 5*10)
@@ -55,7 +55,7 @@ void Enemy::move()
     {
         if(pos_x-initial_x > (-5)*10)
         {
-            pos_x-=5;
+            pos_x-=10;
             setPos(pos_x,pos_y);
         }
         else if(pos_x-initial_x <= (-5)*10)

@@ -56,6 +56,7 @@ void Player::keyPressEvent(QKeyEvent *event)
     }
     else if(event->key() == Qt::Key_Space)
     {
+
         //emit testsignal();
         Bullet *bullet = new Bullet();
         connect(bullet, &Bullet::increaseScore, this, &Player::increaseScoreSlot);
@@ -72,10 +73,6 @@ void Player::keyPressEvent(QKeyEvent *event)
             bulletSound->play();
         }
         qDebug() << "Bullet sound media state:" << bulletSound->mediaStatus();
-
-
-
-
     }
 }
 

@@ -4,16 +4,19 @@
 
 #include "game.h"
 extern Game *game;
-Enemy::Enemy (QGraphicsItem *parent ) : QObject(), QGraphicsPixmapItem()
+Enemy::Enemy (int x, int y, QGraphicsItem *parent ) : QObject(), QGraphicsPixmapItem()
 {
-    int random_number = rand() % 700;
-    setPos(random_number, 0);
+    pos_x=x;
+    pos_y=y;
+    initial_x=x;
+    initial_y=y;
+    setPos(pos_x, pos_y);
     //draw the rect
     setPixmap(QPixmap(sprite));
     QPixmap originalPixmap(sprite);  // Replace with the path to your image
 
     // Resize the pixmap without maintaining the aspect ratio
-    QPixmap resizedPixmap = originalPixmap.scaled(50, 50,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+    QPixmap resizedPixmap = originalPixmap.scaled(30, 30,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 
     // Set the resized pixmap as the image for QGraphicsPixmapItem
     setPixmap(resizedPixmap);
@@ -22,7 +25,7 @@ Enemy::Enemy (QGraphicsItem *parent ) : QObject(), QGraphicsPixmapItem()
     QTimer * timer = new QTimer(this );
     connect(timer,SIGNAL(timeout()), this, SLOT(move()));
 
-    timer->start(50);
+    timer->start(1000);
 }
 
 void Enemy::setSprite(QString address)
@@ -32,14 +35,34 @@ void Enemy::setSprite(QString address)
 
 void Enemy::move()
 {
-    setPos(x(), y() + 5);
-    if(pos().y() > 600)
+    //All enemies movement pattern
+    if(movement_counter%2==0)
     {
-        //decrease health
-        game->health->decrease();
-        scene()->removeItem(this);
-        delete this;
+        if(pos_x-initial_x < 5*10)
+        {
+            pos_x+=5;
+            setPos(pos_x,pos_y);
+        }
+        else if(pos_x-initial_x >= 5*10)
+        {
+            pos_y+=20;
+            setPos(pos_x,pos_y);
+            movement_counter++;
+        }
+    }
 
-
+    else if(movement_counter%2==1)
+    {
+        if(pos_x-initial_x > (-5)*10)
+        {
+            pos_x-=5;
+            setPos(pos_x,pos_y);
+        }
+        else if(pos_x-initial_x <= (-5)*10)
+        {
+            pos_y+=20;
+            setPos(pos_x,pos_y);
+            movement_counter++;
+        }
     }
 }

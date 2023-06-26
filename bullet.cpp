@@ -44,8 +44,9 @@ void Bullet::move()
                // emit increaseScore(hit_enemy->score_value);
                 scene()->removeItem(hit_enemy);
                 scene()->removeItem(this);
+                //Moshkel crash: Delete shodane bullet
                 delete hit_enemy;
-                delete this;
+                //delete this;
             }
         }
 
@@ -58,7 +59,7 @@ void Bullet::move()
     if(pos().y() + pixmap().height() < 0)
     {
         scene()->removeItem(this);
-        delete this;
+        //delete this;
 
     }
 }

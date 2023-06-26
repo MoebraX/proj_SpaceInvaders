@@ -2,6 +2,8 @@
     <qresource prefix="/sounds">
         <file>GBC.mp3</file>
         <file>shoot.wav</file>
+        <file>assets/space invaders - loop.ogg</file>
+        <file>assets/space invaders - opening.ogg</file>
     </qresource>
     <qresource prefix="/Images">
         <file>Background.png</file>

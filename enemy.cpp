@@ -16,7 +16,7 @@ Enemy::Enemy (int x, int y, QGraphicsItem *parent ) : QObject(), QGraphicsPixmap
     QPixmap originalPixmap(sprite);  // Replace with the path to your image
 
     // Resize the pixmap without maintaining the aspect ratio
-    QPixmap resizedPixmap = originalPixmap.scaled(30, 30,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+    QPixmap resizedPixmap = originalPixmap.scaled(50, 50,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 
     // Set the resized pixmap as the image for QGraphicsPixmapItem
     setPixmap(resizedPixmap);
@@ -25,7 +25,7 @@ Enemy::Enemy (int x, int y, QGraphicsItem *parent ) : QObject(), QGraphicsPixmap
     QTimer * timer = new QTimer(this );
     connect(timer,SIGNAL(timeout()), this, SLOT(move()));
 
-    timer->start(1000);
+    timer->start(900);
 }
 
 void Enemy::setSprite(QString address)
@@ -45,7 +45,7 @@ void Enemy::move()
         }
         else if(pos_x-initial_x >= 5*10)
         {
-            pos_y+=20;
+            pos_y+=30;
             setPos(pos_x,pos_y);
             movement_counter++;
         }
@@ -60,7 +60,7 @@ void Enemy::move()
         }
         else if(pos_x-initial_x <= (-5)*10)
         {
-            pos_y+=20;
+            pos_y+=30;
             setPos(pos_x,pos_y);
             movement_counter++;
         }

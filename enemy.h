@@ -53,7 +53,7 @@ public:
         QPixmap originalPixmap(sprite);  // Replace with the path to your image
 
         // Resize the pixmap without maintaining the aspect ratio
-        QPixmap resizedPixmap = originalPixmap.scaled(30, 30,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+        QPixmap resizedPixmap = originalPixmap.scaled(35, 35,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 
         // Set the resized pixmap as the image for QGraphicsPixmapItem
         setPixmap(resizedPixmap);
@@ -78,7 +78,7 @@ public:
         QPixmap originalPixmap(sprite);  // Replace with the path to your image
 
         // Resize the pixmap without maintaining the aspect ratio
-        QPixmap resizedPixmap = originalPixmap.scaled(30, 30,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+        QPixmap resizedPixmap = originalPixmap.scaled(35, 35,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 
         // Set the resized pixmap as the image for QGraphicsPixmapItem
         setPixmap(resizedPixmap);
@@ -103,7 +103,7 @@ public:
         QPixmap originalPixmap(sprite);  // Replace with the path to your image
 
         // Resize the pixmap without maintaining the aspect ratio
-        QPixmap resizedPixmap = originalPixmap.scaled(30, 30,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+        QPixmap resizedPixmap = originalPixmap.scaled(35, 35,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
 
         // Set the resized pixmap as the image for QGraphicsPixmapItem
         setPixmap(resizedPixmap);

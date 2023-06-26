@@ -17,8 +17,13 @@
         <file>assets/Alien_Okhtapoos_01__white.png</file>
         <file>assets/Alien_Okhtapoos_02__white.png</file>
         <file>assets/Alien_spaceShip___white.png</file>
+        <file>Icon.png</file>
     </qresource>
     <qresource prefix="/fonts">
         <file>MyGirlIsRetro-0Grz.ttf</file>
+        <file>pixel.ttf</file>
+        <file>THUNDERSTRIKECOND.TTF</file>
+        <file>THUNDERSTRIKEEXPAND.TTF</file>
+        <file>THUNDERSTRIKEITALIC.TTF</file>
     </qresource>
 </RCC>

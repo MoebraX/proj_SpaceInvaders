@@ -7,7 +7,7 @@ Mainmenu::Mainmenu()
      //create secene
     mainmenu_scene = new QGraphicsScene();
     mainmenu_scene->setSceneRect(0, 0, 800, 600);// make the secen 600*700 instead of infinity by infinity
-    mainmenu_scene->setBackgroundBrush(Qt::blue);
+    mainmenu_scene->setBackgroundBrush(Qt::black);
 
     //make the newly created scene the scene to visualize
     //it ccan be used to visualize scene
@@ -27,10 +27,12 @@ Mainmenu::Mainmenu()
 
     //Title of the game
     QGraphicsTextItem *titleText = new QGraphicsTextItem(QString("Space Invaders"));
-    QFontDatabase::addApplicationFont(":/fonts/MyGirlIsRetro-0Grz.ttf");
-    QFont titleFont(":/fonts/MyGirlIsRetro-0Grz.ttf", 50);
+    int fontId = QFontDatabase::addApplicationFont(":/fonts/THUNDERSTRIKECOND.TTF");
+    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+    QFont titleFont(fontFamily);
+    titleFont.setPointSize(50);
     titleText->setFont(titleFont);
-    titleText->setDefaultTextColor(Qt::yellow);
+    titleText->setDefaultTextColor(Qt::green);
     int xTitlePos = this->width()/2 - titleText->boundingRect().width()/2;
     int yTitlePos = 150;
     titleText->setPos(xTitlePos, yTitlePos);

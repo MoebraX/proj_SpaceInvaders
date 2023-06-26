@@ -2,14 +2,22 @@
 #include <QGraphicsScene>
 #include <QFont>
 #include "game.h"
+#include <QFontDatabase>
 extern Game *game;
 Health::Health(QGraphicsItem *parent): QGraphicsTextItem(parent)
 {
     health = 3;
 
     setPlainText("Health: " + QString::number(health));
-    setDefaultTextColor(Qt::red);
-    setFont(QFont("times", 16));
+    setDefaultTextColor(Qt::green);
+
+    int fontId = QFontDatabase::addApplicationFont(":/fonts/pixel.ttf");
+    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+
+    QFont font(fontFamily);
+    font.setPointSize(11);
+    setFont(font);
+
 }
 
 void Health::decrease()

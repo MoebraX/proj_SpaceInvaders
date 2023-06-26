@@ -1,4 +1,4 @@
-
+#include <QFontDatabase>
 #include "score.h"
 #include <QGraphicsScene>
 #include <QFont>
@@ -7,7 +7,12 @@ Score::Score(QGraphicsItem *parent): QGraphicsTextItem(parent)
     score = 0;
     setPlainText("Score: " + QString::number(score));
     setDefaultTextColor(Qt::green);
-    setFont(QFont("times", 16));
+    int fontId = QFontDatabase::addApplicationFont(":/fonts/pixel.ttf");
+    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+    QFont font(fontFamily);
+    font.setPointSize(11);
+    setFont(font);
+
 }
 
 void Score::increase(int value)

@@ -4,9 +4,9 @@
 
 Mainmenu::Mainmenu()
 {
-    //create secene
+     //create secene
     mainmenu_scene = new QGraphicsScene();
-    mainmenu_scene->setSceneRect(0, 0, 800, 600);// make the secen 800 * 600 instead of infinity by infinity
+    mainmenu_scene->setSceneRect(0, 0, 600, 700);// make the secen 800 * 600 instead of infinity by infinity
     mainmenu_scene->setBackgroundBrush(Qt::blue);
 
     //make the newly created scene the scene to visualize
@@ -14,7 +14,16 @@ Mainmenu::Mainmenu()
     setScene(mainmenu_scene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setFixedSize(800, 600);
+    setFixedSize(600, 700);
+
+    // Center the game window on the screen
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QRect screenGeometry = screen->geometry();
+    int screenWidth = screenGeometry.width();
+    int screenHeight = screenGeometry.height();
+    int windowX = (screenWidth - width()) / 2;
+    int windowY = (screenHeight - height()) / 2;
+    setGeometry(windowX, windowY, width(), height());
 
     //Title of the game
     QGraphicsTextItem *titleText = new QGraphicsTextItem(QString("Space Invaders"));

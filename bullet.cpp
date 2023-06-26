@@ -9,7 +9,6 @@
 Bullet::Bullet(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent)
 {
     //draw graphics
-
     QPixmap originalPixmap(":/Images/bullet.png");  // Replace with the path to your image
 
     // Resize the pixmap without maintaining the aspect ratio
@@ -17,12 +16,6 @@ Bullet::Bullet(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent)
 
     // Set the resized pixmap as the image for QGraphicsPixmapItem
     setPixmap(resizedPixmap);
-
-    //connect to timer to the move slot
-    QTimer * timer = new QTimer();
-    connect(timer,SIGNAL(timeout()), this, SLOT(move()));
-
-    timer->start(50);
 }
 
 void Bullet::move()
@@ -43,10 +36,11 @@ void Bullet::move()
             else{
                // emit increaseScore(hit_enemy->score_value);
                 scene()->removeItem(hit_enemy);
-                scene()->removeItem(this);
+                //scene()->removeItem(this);
                 //Moshkel crash: Delete shodane bullet
                 delete hit_enemy;
-                //delete this;
+                scene()->removeItem(this);
+                emit hitEnemy();
             }
         }
 
@@ -58,9 +52,8 @@ void Bullet::move()
     //Remove the bullet if it goes out of the window
     if(pos().y() + pixmap().height() < 0)
     {
-        //scene()->removeItem(this);
-        //delete this;
+        emit hitEnemy();
+        scene()->removeItem(this);
 
     }
 }
-

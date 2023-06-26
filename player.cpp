@@ -6,10 +6,14 @@
 #include<QTimer>
 #include "enemy.h"
 #include <QAudioOutput>
+
 Player::Player(QGraphicsItem *parent): QGraphicsPixmapItem(parent)
 {
-
-
+    bullet = new Bullet();
+    connect(bullet, &Bullet::increaseScore, this, &Player::increaseScoreSlot);
+    connect(bullet, &Bullet::hitEnemy, this, &Player::bulletHit);
+    bullettimer = new QTimer();
+    connect(bullettimer,SIGNAL(timeout()), bullet, SLOT(move()));
 
     bulletSound = new QMediaPlayer();
 
@@ -30,6 +34,7 @@ Player::Player(QGraphicsItem *parent): QGraphicsPixmapItem(parent)
 
     // Set the resized pixmap as the image for QGraphicsPixmapItem
     setPixmap(resizedPixmap);
+
 }
 
 void Player::keyPressEvent(QKeyEvent *event)
@@ -37,42 +42,47 @@ void Player::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_Left)
     {
         if(pos().x() > 0)
-        setPos(x() - 10, y());
+         setPos(x() - 10, y());
     }
     else if( event->key() == Qt::Key_Right)
     {
         if(pos().x() + 100 < 800)
-        setPos(x() + 10, y());
+         setPos(x() + 10, y());
     }
-    else if( event->key() == Qt::Key_Up)
+   /* else if( event->key() == Qt::Key_Up)
     {
         if(pos().y() > 0)
         setPos(x(), y() - 10);
+        bullet->setPos(x(), y());
     }
     else if( event->key() == Qt::Key_Down)
     {
         if(pos().y() + 100 < 600)
         setPos(x(), y() + 10);
-    }
+        bullet->setPos(x(), y());
+    }*/
     else if(event->key() == Qt::Key_Space)
     {
-
         //emit testsignal();
-        Bullet *bullet = new Bullet();
-        connect(bullet, &Bullet::increaseScore, this, &Player::increaseScoreSlot);
-        bullet->setPos(x(), y());
-        scene()->addItem(bullet);
-        bulletSound->play();
-        //play bullet sound
-        if(bulletSound->mediaStatus() == QMediaPlayer::PlayingState)
+        if(bullet->flag==true)
         {
-        bulletSound->setPosition(0);
+         bullet->flag=false;
+         bullet->setPos(x(), y());
+          scene()->addItem(bullet);
+          bulletSound->play();
+          //play bullet sound
+          if(bulletSound->mediaStatus() == QMediaPlayer::PlayingState)
+          {
+              bulletSound->setPosition(0);
+          }
+          else if(bulletSound->mediaStatus() == QMediaPlayer::StoppedState)
+          {
+              bulletSound->play();
+          }
+          bullettimer->start(50);
         }
-        else if(bulletSound->mediaStatus() == QMediaPlayer::StoppedState)
-        {
-            bulletSound->play();
-        }
-        qDebug() << "Bullet sound media state:" << bulletSound->mediaStatus();
+
+        //qDebug() << "Bullet sound media state:" << bulletSound->mediaStatus();
     }
 }
 
@@ -86,4 +96,10 @@ void Player::spawn()
 void Player::increaseScoreSlot(int value)
 {
     emit increaseScoreSignal(value);
+}
+
+void Player::bulletHit()
+{
+    bullettimer->stop();
+    bullet->flag=true;
 }

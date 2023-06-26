@@ -34,10 +34,8 @@ void Bullet::move()
 
             //remove enemy and bullet from heap memory
             else{
-               // emit increaseScore(hit_enemy->score_value);
+                emit increaseScore(hit_enemy->score_value);
                 scene()->removeItem(hit_enemy);
-                //scene()->removeItem(this);
-                //Moshkel crash: Delete shodane bullet
                 delete hit_enemy;
                 scene()->removeItem(this);
                 emit hitEnemy();

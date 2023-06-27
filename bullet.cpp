@@ -19,22 +19,23 @@ Bullet::Bullet(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent)
     setPixmap(resizedPixmap);
 }
 
+
 void Bullet::move()
 {
-    // check for collision with enemies
+    //check for collision with enemies or Bricks
     QList<QGraphicsItem *> colliding_items = collidingItems();
     for(auto const i : colliding_items)
     {
         Enemy* hit_enemy = dynamic_cast<Enemy*>(i);
+        //Brick* hit_brick = dynamic_cast<Brick*>(i);
         if(hit_enemy    != nullptr)
         {
             //decrease enemy's health
             if(hit_enemy->health>1)
                 hit_enemy->health--;
-
-
             //remove enemy from heap memory and related QList
-            else{
+            else
+            {
                 scene()->removeItem(hit_enemy);
                 int index=AlienBug::all_Bugs.indexOf(static_cast<AlienBug*>(hit_enemy));
                 if(index!=-1)
@@ -57,18 +58,24 @@ void Bullet::move()
         }
     }
 
-    //Check for collision with Brick
+    bool hit_brick = false;
     for(auto const i : colliding_items)
     {
-        Brick* hit_brick = dynamic_cast<Brick*>(i);
-        if(hit_brick    != nullptr)
+        Brick* brick = dynamic_cast<Brick*>(i);
+        //Check for collision with Brick
+        if(brick  != nullptr && hit_brick==false)
         {
             //decrease brick's health
-            hit_brick->decreaseHP();
-
-            scene()->removeItem(this);
-            emit hitEnemy();
+            brick->decreaseHP();
+            hit_brick = true;
         }
+    }
+
+    if(hit_brick)
+    {
+        scene()->removeItem(this);
+        emit hitEnemy();
+        return;
     }
 
     // move the bullet  upwards
@@ -81,3 +88,70 @@ void Bullet::move()
 
     }
 }
+
+/*
+void Bullet::move()
+{
+    QList<QGraphicsItem *> colliding_items = collidingItems();
+    bool hit_brick = false;
+
+    for(auto const i : colliding_items)
+    {
+        // Check for collision with Brick
+        Brick* brick = dynamic_cast<Brick*>(i);
+        if(brick != nullptr)
+        {
+            // decrease brick's health
+            brick->decreaseHP();
+            hit_brick = true;
+        }
+
+        // Check for collision with Enemy
+        Enemy* hit_enemy = dynamic_cast<Enemy*>(i);
+        if(hit_enemy != nullptr)
+        {
+            //decrease enemy's health
+            if(hit_enemy->health>1)
+                hit_enemy->health--;
+            //remove enemy from heap memory and related QList
+            else
+            {
+                scene()->removeItem(hit_enemy);
+                int index=AlienBug::all_Bugs.indexOf(static_cast<AlienBug*>(hit_enemy));
+                if(index!=-1)
+                {
+                    AlienBug::all_Bugs.takeAt(index);
+                }
+                else
+                {
+                    int index=AlienOkhtapoos::all_Okhtapooses.indexOf(static_cast<AlienOkhtapoos*>(hit_enemy));
+                    if(index!=-1)
+                    {
+                        AlienOkhtapoos::all_Okhtapooses.takeAt(index);
+                    }
+                }
+                emit increaseScore(hit_enemy->score_value);
+                delete hit_enemy;
+                scene()->removeItem(this);
+            }
+        }
+    }
+
+    if(hit_brick)
+    {
+        scene()->removeItem(this);
+        emit hitEnemy();
+        return;
+    }
+
+    // move the bullet upwards
+    setPos(x(), y() - 20);
+
+    // remove the bullet if it goes out of the window
+    if(pos().y() + pixmap().height() < 0)
+    {
+        emit hitEnemy();
+        scene()->removeItem(this);
+    }
+}
+*/

@@ -24,7 +24,7 @@ public:
     void spawnBricks();
 
     template<typename T>
-    bool chooseShooter(QList<T*> available_aliens, int chance);
+    void chooseShooter(QList<T*> available_aliens, int chance);
     //void displaySettingsMenu();
 
     QGraphicsScene * scene;

@@ -6,6 +6,7 @@
 #include "enemy.h"
 #include "game.h"
 #include "player.h"
+#include "brick.h"
 
 EnemyBullet::EnemyBullet(QString sprite=":/Images/bullet.png")
 {
@@ -49,6 +50,28 @@ void EnemyBullet::move()
             scene()->removeItem(this);
         }
     }
+
+    bool hit_brick = false;
+    for(auto const i : colliding_items)
+    {
+        Brick* brick = dynamic_cast<Brick*>(i);
+        //Check for collision with Brick
+        if(brick  != nullptr && hit_brick==false)
+        {
+            //decrease brick's health
+            brick->decreaseHP();
+            hit_brick = true;
+        }
+    }
+
+    if(hit_brick)
+    {
+        timer->stop();
+        scene()->removeItem(this);
+        return;
+    }
+
+
     // move the bullet downwards
     setPos(x(), y() + 5);
 

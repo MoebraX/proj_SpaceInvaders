@@ -66,7 +66,7 @@ Game::Game()
     spawnEnemies();
     QTimer* thisTimer= new QTimer;
     connect(thisTimer ,SIGNAL(timeout()) ,this, SLOT(enemiesShoot()));
-    thisTimer->start(900);
+    thisTimer->start(1000);
 
     //spawn Bricks
     spawnBricks();
@@ -302,7 +302,7 @@ void Game::spawnEnemies()
 }
 
 template<typename T>
-bool Game::chooseShooter(QList<T*> available_aliens, int chance)
+void Game::chooseShooter(QList<T*> available_aliens, int chance)
 {
     int randomNumber = QRandomGenerator::global()->bounded(chance);
     if(randomNumber%chance == 0)
@@ -310,10 +310,7 @@ bool Game::chooseShooter(QList<T*> available_aliens, int chance)
         randomNumber = QRandomGenerator::global()->bounded(available_aliens.size());
         connect(available_aliens[randomNumber], SIGNAL(decreaseHealthConnectorSignal()), this, SLOT(decreaseHealthConnectorSlot()));
         available_aliens[randomNumber]->shoot();
-        return true;
     }
-    else
-        return false;
 }
 
 void Game::enemiesShoot()
@@ -325,28 +322,8 @@ void Game::enemiesShoot()
     //random shoot konad. In stack edame peyda mikonad ta zamani ke
     //khosh shans nabashim.
 
-    bool result;
-    result=chooseShooter(AlienBug::all_Bugs, 2);
-   /* while(true)
-    {
-        if(result==true)
-        {
-            result=chooseShooter(AlienBug::all_Bugs, 4*2);
-        }
-        else
-            break;
-    }*/
-
-    result=chooseShooter(AlienOkhtapoos::all_Okhtapooses, 2);
-   /* while(true)
-    {
-        if(result==true)
-        {
-            result=chooseShooter(AlienOkhtapoos::all_Okhtapooses, 4*2);
-        }
-        else
-            break;
-    }*/
+    chooseShooter(AlienBug::all_Bugs, 4);
+    chooseShooter(AlienOkhtapoos::all_Okhtapooses, 2);
 }
 
 void Game::decreaseHealthConnectorSlot()

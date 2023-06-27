@@ -16,24 +16,22 @@ Enemy::Enemy (int x, int y, QGraphicsItem *parent ) : QObject(), QGraphicsPixmap
     setPos(pos_x, pos_y);
     //draw the rect
     setPixmap(QPixmap(sprite));
-    QPixmap originalPixmap(sprite);  // Replace with the path to your image
-
-    // Resize the pixmap without maintaining the aspect ratio
+    QPixmap originalPixmap(sprite);
     QPixmap resizedPixmap = originalPixmap.scaled(50, 50,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-
-    // Set the resized pixmap as the image for QGraphicsPixmapItem
     setPixmap(resizedPixmap);
 
     //connect
     QTimer * timer = new QTimer(this );
     connect(timer,SIGNAL(timeout()), this, SLOT(move()));
 
-    timer->start(900);
+    timer->start(1000);
 }
 
-void Enemy::setSprite(QString address)
+void Enemy::setSprite(QString primary, QString secondary)
 {
-    sprite=address;
+    sprite=primary;
+    secondary_sprite=secondary;
+
 }
 
 void Enemy::move()
@@ -45,11 +43,13 @@ void Enemy::move()
         {
             pos_x+=10;
             setPos(pos_x,pos_y);
+            dance();
         }
         else if(pos_x-initial_x >= 5*10)
         {
             pos_y+=30;
             setPos(pos_x,pos_y);
+            dance();
             movement_counter++;
         }
     }
@@ -60,11 +60,13 @@ void Enemy::move()
         {
             pos_x-=10;
             setPos(pos_x,pos_y);
+            dance();
         }
         else if(pos_x-initial_x <= (-5)*10)
         {
             pos_y+=30;
             setPos(pos_x,pos_y);
+            dance();
             movement_counter++;
         }
     }
@@ -83,4 +85,15 @@ void Enemy::shoot()
 void Enemy::decreaseHealthConnectorSlot()
 {
     emit decreaseHealthConnectorSignal();
+}
+
+void Enemy::dance()
+{
+    QString holder = sprite;
+    sprite = secondary_sprite;
+    secondary_sprite = holder;
+    setPixmap(QPixmap(sprite));
+    QPixmap originalPixmap(sprite);
+    QPixmap resizedPixmap = originalPixmap.scaled(35, 40,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+    setPixmap(resizedPixmap);
 }

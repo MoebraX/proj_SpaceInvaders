@@ -72,7 +72,6 @@ void Enemy::move()
 
 void Enemy::shoot()
 {
-    qDebug() << "started shooting";
     EnemyBullet* bullet = new EnemyBullet(":/Images/bullet.png");
     connect(bullet, SIGNAL(decreaseHealth()), this, SLOT(decreaseHealthConnectorSlot()));
     bullet->setPos(x(), y());

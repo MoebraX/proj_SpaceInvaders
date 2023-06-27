@@ -92,8 +92,3 @@ void Player::bulletHit()
     bullettimer->stop();
     bullet->flag=true;
 }
-
-void Player::enemyTimeToShootSlot()
-{
-    emit enemyTimeToShootSignal(x());
-}

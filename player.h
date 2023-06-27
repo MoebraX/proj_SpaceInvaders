@@ -18,14 +18,12 @@ public slots:
     void spawn();
     void increaseScoreSlot(int value);
     void bulletHit();
-    //This one is explicitely for enemies' shooting
-    void enemyTimeToShootSlot();
+
 
 signals:
     void testsignal();
     void increaseScoreSignal(int value);
-    //This one is explicitely for enemies' shooting
-    void enemyTimeToShootSignal(int a);
+
 
 private:
     QMediaPlayer * bulletSound;

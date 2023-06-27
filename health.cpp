@@ -5,7 +5,7 @@
 
 extern Game *game;
 
-Health::Health()
+Health::Health(QObject *parent)
 {
     health = 3;
 
@@ -40,6 +40,5 @@ bool Health::gameover()
 
 void Health::decreaseSlot()
 {
-    qDebug() << "health slot";
     this->decrease();
 }

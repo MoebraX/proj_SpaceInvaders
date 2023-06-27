@@ -1,15 +1,15 @@
 #ifndef HEALTH_H
 #define HEALTH_H
 
+#include <QObject>
 #include <QGraphicsTextItem>
 #include <QGraphicsScene>
-#include <QObject>
 
 class Health : public QGraphicsTextItem
 {
     Q_OBJECT
 public:
-    Health();
+    explicit Health(QObject *parent = nullptr);
     void decrease();
     int getHealth();
 
@@ -19,8 +19,6 @@ public slots:
 private:
     int health;
     bool gameover();
-
 };
-
 
 #endif // HEALTH_H

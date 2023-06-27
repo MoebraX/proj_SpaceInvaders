@@ -31,6 +31,7 @@ private:
 public slots:
     void move();
     void decreaseHealthConnectorSlot();
+
 signals:
     void destroyed(int point);
     void decreaseHealthConnectorSignal();

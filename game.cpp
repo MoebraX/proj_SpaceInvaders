@@ -65,8 +65,7 @@ Game::Game()
     //spawn enemies
     spawnEnemies();
     QTimer* thisTimer= new QTimer;
-    connect(thisTimer ,SIGNAL(timeout()) ,player ,SLOT(enemyTimeToShootSlot()));
-    connect(player, SIGNAL(enemyTimeToShootSignal(int)), this, SLOT(enemiesShoot(int)));
+    connect(thisTimer ,SIGNAL(timeout()) ,this, SLOT(enemiesShoot()));
     thisTimer->start(900);
 
     //play background
@@ -300,10 +299,10 @@ void Game::spawnEnemies()
 }
 
 template<typename T>
-bool Game::chooseShooter(int target_x, QList<T*> available_aliens)
+bool Game::chooseShooter(QList<T*> available_aliens, int chance)
 {
-    int randomNumber = QRandomGenerator::global()->bounded(3);
-    if(randomNumber%3 == 0)
+    int randomNumber = QRandomGenerator::global()->bounded(chance);
+    if(randomNumber%chance == 0)
     {
         randomNumber = QRandomGenerator::global()->bounded(available_aliens.size());
         connect(available_aliens[randomNumber], SIGNAL(decreaseHealthConnectorSignal()), this, SLOT(decreaseHealthConnectorSlot()));
@@ -314,50 +313,37 @@ bool Game::chooseShooter(int target_x, QList<T*> available_aliens)
         return false;
 }
 
-void Game::enemiesShoot(int target_x)
+void Game::enemiesShoot()
 {
-    qDebug() << "Executed enemiesShoot";
-    bool result;
     //2 bar call kardane chooseShooter, baraye Bug ha va Okhtapoos ha.
-    //Algorithm shoot be in soorat ast ke dar har baze zamani, agar
+    //Mechanism shoot be in soorat ast ke dar har baze zamani, agar
     //khosh shans bashim va chooseShooter ejra shavad, in shans
     //vojood darad ke dobare ham ba shans nesf yek enemy be soorate
     //random shoot konad. In stack edame peyda mikonad ta zamani ke
     //khosh shans nabashim.
-    while(true)
+
+    bool result;
+    result=chooseShooter(AlienBug::all_Bugs, 2);
+   /* while(true)
     {
-        result=chooseShooter(target_x, AlienBug::all_Bugs);
         if(result==true)
         {
-            int randomNumber = QRandomGenerator::global()->bounded(6);
-            if(randomNumber%6==0)
-            {
-                int randomNumber = QRandomGenerator::global()->bounded(AlienBug::all_Bugs.size());
-                AlienBug::all_Bugs[randomNumber]->shoot();
-            }
-            else
-                break;
+            result=chooseShooter(AlienBug::all_Bugs, 4*2);
         }
         else
             break;
-    }
-    while(true)
+    }*/
+
+    result=chooseShooter(AlienOkhtapoos::all_Okhtapooses, 2);
+   /* while(true)
     {
-        result=chooseShooter(target_x,AlienOkhtapoos::all_Okhtapooses);
         if(result==true)
         {
-            int randomNumber = QRandomGenerator::global()->bounded(6);
-            if(randomNumber%6==0)
-            {
-                int randomNumber = QRandomGenerator::global()->bounded(AlienOkhtapoos::all_Okhtapooses.size());
-                AlienOkhtapoos::all_Okhtapooses[randomNumber]->shoot();
-            }
-            else
-                break;
+            result=chooseShooter(AlienOkhtapoos::all_Okhtapooses, 4*2);
         }
         else
             break;
-    }
+    }*/
 }
 
 void Game::decreaseHealthConnectorSlot()

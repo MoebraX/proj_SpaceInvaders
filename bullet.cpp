@@ -59,7 +59,7 @@ void Bullet::move()
 
 
     // move the bullet  upwards
-    setPos(x(), y() - 10);
+    setPos(x(), y() - 20);
     //Remove the bullet if it goes out of the window
     if(pos().y() + pixmap().height() < 0)
     {

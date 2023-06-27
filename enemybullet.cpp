@@ -12,8 +12,15 @@ EnemyBullet::EnemyBullet(QString sprite=":/Images/bullet.png")
     //draw graphics
     QPixmap originalPixmap(sprite);
 
+
+
+    // Rotate the pixmap by 180 degrees
+    QTransform transform;
+    transform.rotate(180);
+    QPixmap rotatedPixmap = originalPixmap.transformed(transform);
+
     // Resize the pixmap without maintaining the aspect ratio
-    QPixmap resizedPixmap = originalPixmap.scaled(10, 30,Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+    QPixmap resizedPixmap = rotatedPixmap.scaled(10, 30, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
     // Set the resized pixmap as the image for QGraphicsPixmapItem
     setPixmap(resizedPixmap);
@@ -43,7 +50,7 @@ void EnemyBullet::move()
         }
     }
     // move the bullet downwards
-    setPos(x(), y() + 10);
+    setPos(x(), y() + 5);
 
     //Remove the bullet if it goes out of the window
     if(pos().y() + pixmap().height() > 600)

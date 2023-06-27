@@ -11,6 +11,7 @@
 #include "button.h"
 #include "enemy.h"
 #include "mainmenu.h"
+#include "brick.h"
 
 Game::Game()
 {
@@ -35,7 +36,7 @@ Game::Game()
     health->setPos(health->x(), health->y() + 25);
     scene->addItem(health);
 
-    //create an item to put into the scene
+    //Create player
     Player * player = new Player();
     connect(player, &Player::testsignal, this , &Game::displayGameover);
     connect(player, &Player::increaseScoreSignal, score, &Score::increaseScore);
@@ -43,7 +44,6 @@ Game::Game()
     // make the player focusable and set it to be the current focus
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
-
     // add to the scene
     scene->addItem(player);
 
@@ -59,7 +59,7 @@ Game::Game()
     view->setBackgroundBrush(QBrush(scaledImage));
 
 
-    player->setPos(view->width()/2, view->height() - player->pixmap().height());
+    player->setPos(view->width()/2, view->height() - (player->pixmap().height() + 20));
 
 
     //spawn enemies
@@ -67,6 +67,10 @@ Game::Game()
     QTimer* thisTimer= new QTimer;
     connect(thisTimer ,SIGNAL(timeout()) ,this, SLOT(enemiesShoot()));
     thisTimer->start(900);
+
+    //spawn Bricks
+    Brick* brick1 = new Brick(200,350,1);
+    scene->addItem(brick1);
 
     //play background
     QMediaPlayer *  music = new QMediaPlayer();

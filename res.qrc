@@ -4,6 +4,14 @@
         <file>shoot.wav</file>
         <file>assets/space invaders - loop.ogg</file>
         <file>assets/space invaders - opening.ogg</file>
+        <file>assets/shalvar_rectangle.png</file>
+        <file>assets/shalvar_sqare.png</file>
+        <file>assets/shalvar_rectangle_X.png</file>
+        <file>assets/shalvar_rectangle_XX.png</file>
+        <file>assets/shalvar_rectangle_XXX.png</file>
+        <file>assets/shalvar_sqare_X.png</file>
+        <file>assets/shalvar_sqare_XX.png</file>
+        <file>assets/shalvar_sqare_XXX.png</file>
     </qresource>
     <qresource prefix="/Images">
         <file>Background.png</file>

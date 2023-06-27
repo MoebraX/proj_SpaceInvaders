@@ -5,6 +5,7 @@
 #include <QList>
 #include "enemy.h"
 #include "game.h"
+#include "brick.h"
 
 Bullet::Bullet(QGraphicsItem *parent): QObject(), QGraphicsPixmapItem(parent)
 {
@@ -54,9 +55,21 @@ void Bullet::move()
             }
             emit hitEnemy();
         }
-
     }
 
+    //Check for collision with Brick
+    for(auto const i : colliding_items)
+    {
+        Brick* hit_brick = dynamic_cast<Brick*>(i);
+        if(hit_brick    != nullptr)
+        {
+            //decrease brick's health
+            hit_brick->decreaseHP();
+
+            scene()->removeItem(this);
+            emit hitEnemy();
+        }
+    }
 
     // move the bullet  upwards
     setPos(x(), y() - 10);

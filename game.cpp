@@ -69,8 +69,7 @@ Game::Game()
     thisTimer->start(900);
 
     //spawn Bricks
-    Brick* brick1 = new Brick(200,350,1);
-    scene->addItem(brick1);
+    spawnBricks();
 
     //play background
     QMediaPlayer *  music = new QMediaPlayer();
@@ -353,4 +352,49 @@ void Game::enemiesShoot()
 void Game::decreaseHealthConnectorSlot()
 {
     emit decreaseHealthConnectorSignal();
+}
+
+void Game::spawnAStackOfBricks(int x, int y, int len)
+{
+    Brick* brick1 = new Brick(x-len,y,1);
+    scene->addItem(brick1);
+    Brick* brick2 = new Brick(x,y,1);
+    scene->addItem(brick2);
+    Brick* brick3 = new Brick(x-2*len,y,0,180);
+    scene->addItem(brick3);
+    Brick* brick4 = new Brick(x+len,y,0,270);
+    scene->addItem(brick4);
+    Brick* brick5 = new Brick(x-len,y+len,0);
+    scene->addItem(brick5);
+    Brick* brick6 = new Brick(x,y+len,0,90);
+    scene->addItem(brick6);
+    Brick* brick7 = new Brick(x-2*len,y+len,1);
+    scene->addItem(brick7);
+    Brick* brick8 = new Brick(x+len,y+len,1);
+    scene->addItem(brick8);
+    Brick* brick9 = new Brick(x-2*len,y+2*len,1);
+    scene->addItem(brick9);
+    Brick* brick10 = new Brick(x+len,y+2*len,1);
+    scene->addItem(brick10);
+}
+
+void Game::spawnBricks()
+{
+    int len=15;
+    int distance =(800-4*4*len)/5;
+    int x=distance+2*len, y=400;
+    //First stack of bricks:
+    spawnAStackOfBricks(x,y,len);
+
+    //Second stack of bricks:
+    x=x+distance+4*len;
+    spawnAStackOfBricks(x,y,len);
+
+    //Third stack of bricks:
+    x=x+distance+4*len;
+    spawnAStackOfBricks(x,y,len);
+
+    //Forth stack of bricks:
+    x=x+distance+4*len;
+    spawnAStackOfBricks(x,y,len);
 }

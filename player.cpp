@@ -31,6 +31,7 @@ Player::Player(QGraphicsItem *parent): QGraphicsPixmapItem(parent)
 
     // Resize the pixmap without maintaining the aspect ratio
     QPixmap resizedPixmap = originalPixmap.scaled(50, 50, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    //Becareful: If you change the scale of spaceship, also adjust the pos() of bullet
 
     // Set the resized pixmap as the image for QGraphicsPixmapItem
     setPixmap(resizedPixmap);
@@ -56,7 +57,7 @@ void Player::keyPressEvent(QKeyEvent *event)
         if(bullet->flag==true)
         {
          bullet->flag=false;
-         bullet->setPos(x() + 50, y());
+         bullet->setPos(x() + 20, y()-10);
           scene()->addItem(bullet);
           bulletSound->play();
           //play bullet sound

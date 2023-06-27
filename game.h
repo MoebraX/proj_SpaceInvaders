@@ -20,6 +20,9 @@ public:
 
     void displayGameover();
     void spawnEnemies();
+    void spawnAStackOfBricks(int x, int y, int len);
+    void spawnBricks();
+
     template<typename T>
     bool chooseShooter(QList<T*> available_aliens, int chance);
     //void displaySettingsMenu();

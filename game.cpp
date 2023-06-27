@@ -19,7 +19,9 @@ Game::Game()
     //create secene
     scene = new QGraphicsScene();
     scene->setSceneRect(0, 0, 800,600);// make the secen 600 * 800 instead of infinity by infinity
-    setBackgroundBrush(QBrush(QImage(":/Images/Solid_black.png")));
+    QImage backgroundImage(":/Images/Background.png");
+    QImage scaledImage = backgroundImage.scaled(800,600, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    scene->setBackgroundBrush(QBrush(scaledImage));
 
     //make the newly created scene the scene to visualize
     //it ccan be used to visualize scene
@@ -56,9 +58,9 @@ Game::Game()
     view->show();
     view->setFixedSize(800,600);
     scene->setSceneRect(0,0, 800,600);
-    QImage backgroundImage(":/Images/Solid_black.png");
-    QImage scaledImage = backgroundImage.scaled(view->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    view->setBackgroundBrush(QBrush(scaledImage));
+    //QImage backgroundImage(":/Images/Solid_black.png");
+    //QImage scaledImage = backgroundImage.scaled(view->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    //view->setBackgroundBrush(QBrush(scaledImage));
 
 
     player->setPos(view->width()/2, view->height() - (player->pixmap().height() + 20));
@@ -110,8 +112,8 @@ void Game::displayGameover()
     int yTitlePos = 300;
     titleText->setPos(xTitlePos-10, yTitlePos-50);
     scene->addItem(titleText);
-    //titleText->setFlag(QGraphicsItem::ItemIsFocusable);
-   // titleText->setFocus();
+    titleText->setFlag(QGraphicsItem::ItemIsFocusable);
+    titleText->setFocus();
     QTimer::singleShot(5000, this, SLOT(gameoverSlot()));
 }
 
@@ -120,7 +122,8 @@ void Game::gameoverSlot()
 {
     this->close();
     Mainmenu* mainmenu = new Mainmenu;
-    this->deleteLater();
+    delete this;
+    qDebug()<<"ended";
 }
 
 

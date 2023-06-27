@@ -14,9 +14,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("Space-Invaders");
     QIcon icon(":Images/Icon.png");
     QApplication::setWindowIcon(icon);
-   // game = new Game();
-    //game->show();
-    //game->displayMainmenu();
+
     mainmenu = new Mainmenu();
     mainmenu->show();
 

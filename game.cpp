@@ -6,7 +6,7 @@
 #include <QTime>
 #include <QList>
 #include <QRandomGenerator>
-
+#include <QThread>
 #include <endscreen.h>
 #include "game.h"
 #include "button.h"
@@ -114,16 +114,16 @@ void Game::displayGameover()
     scene->addItem(titleText);
     titleText->setFlag(QGraphicsItem::ItemIsFocusable);
     titleText->setFocus();
-    QTimer::singleShot(5000, this, SLOT(gameoverSlot()));
+    QTimer::singleShot(1000, this, SLOT(gameoverSlot()));
 }
 
 
 void Game::gameoverSlot()
 {
+    //Mainmenu* mainmenu = new Mainmenu;
+    //mainmenu->show();
     this->close();
-    Mainmenu* mainmenu = new Mainmenu;
-    delete this;
-    qDebug()<<"ended";
+    this->deleteLater();
 }
 
 

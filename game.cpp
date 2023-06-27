@@ -19,9 +19,11 @@ Game::Game()
     //create secene
     scene = new QGraphicsScene();
     scene->setSceneRect(0, 0, 800,600);// make the secen 600 * 800 instead of infinity by infinity
+
     QImage backgroundImage(":/Images/Background.png");
     QImage scaledImage = backgroundImage.scaled(800,600, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     scene->setBackgroundBrush(QBrush(scaledImage));
+
 
     //make the newly created scene the scene to visualize
     //it ccan be used to visualize scene
@@ -58,9 +60,8 @@ Game::Game()
     view->show();
     view->setFixedSize(800,600);
     scene->setSceneRect(0,0, 800,600);
-    //QImage backgroundImage(":/Images/Solid_black.png");
-    //QImage scaledImage = backgroundImage.scaled(view->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    //view->setBackgroundBrush(QBrush(scaledImage));
+    view->setBackgroundBrush(QBrush(scaledImage));
+
 
 
     player->setPos(view->width()/2, view->height() - (player->pixmap().height() + 20));
@@ -79,7 +80,7 @@ Game::Game()
     QMediaPlayer *  music = new QMediaPlayer();
     QAudioOutput* audioOutput = new QAudioOutput;
     music->setAudioOutput(audioOutput);
-    audioOutput->setVolume(0.3);
+    audioOutput->setVolume(0.5);
     music->setSource(QUrl("qrc:/sounds/assets/space invaders - loop.ogg"));
     music->play();
 }

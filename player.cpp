@@ -56,7 +56,7 @@ void Player::keyPressEvent(QKeyEvent *event)
         if(bullet->flag==true)
         {
          bullet->flag=false;
-         bullet->setPos(x(), y());
+         bullet->setPos(x() + 50, y());
           scene()->addItem(bullet);
           bulletSound->play();
           //play bullet sound

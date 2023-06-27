@@ -27,7 +27,7 @@ Mainmenu::Mainmenu()
     setGeometry(windowX, windowY, width(), height());
 
     //Title of the game
-    QGraphicsTextItem *titleText = new QGraphicsTextItem(QString("Space Invaders"));
+    QGraphicsTextItem *titleText = new QGraphicsTextItem(QString("Space \nInvaders"));
     int fontId = QFontDatabase::addApplicationFont(":/fonts/THUNDERSTRIKECOND.TTF");
     QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
     QFont titleFont(fontFamily);
@@ -35,7 +35,7 @@ Mainmenu::Mainmenu()
     titleText->setFont(titleFont);
     titleText->setDefaultTextColor(Qt::green);
     int xTitlePos = this->width()/2 - titleText->boundingRect().width()/2;
-    int yTitlePos = 150;
+    int yTitlePos = 100;
     titleText->setPos(xTitlePos, yTitlePos);
     mainmenu_scene->addItem(titleText);
 
@@ -48,7 +48,7 @@ Mainmenu::Mainmenu()
     mainmenu_scene->addItem(playButton);
 
     // create settings button
-    Button *settingsButton = new Button(QString("Settings"));
+    Button *settingsButton = new Button(QString("Achievements"));
     int xSettingsPos = this->width()/2 - settingsButton->boundingRect().width()/2;
     int ySettingsPos = 350;
     settingsButton->setPos(xSettingsPos, ySettingsPos);

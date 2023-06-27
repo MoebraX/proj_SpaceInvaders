@@ -20,7 +20,6 @@ public:
     void spawnEnemies();
     void spawnAStackOfBricks(int x, int y, int len);
     void spawnBricks();
-
     template<typename T>
     void chooseShooter(QList<T*> available_aliens, int chance);
 
@@ -32,13 +31,17 @@ public:
     int sceneWidth;
     int sceneHeight;
 
+    QTimer* enemyshoot_timer;
+
 public slots:
     void enemiesShoot();
     void decreaseHealthConnectorSlot();
+    void gameoverSlot();
     void displayGameover();
 
 signals:
     void decreaseHealthConnectorSignal();
+
 
 };
 

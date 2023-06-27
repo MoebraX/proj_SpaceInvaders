@@ -20,12 +20,15 @@ Health::Health()
 
 void Health::decrease()
 {
-    health--;
+    if(health>0)
+        health--;
     if(health==0)
     {
+        setPlainText("Health: " + QString::number(health));
+        health--;
         emit gameover();
     }
-    else
+    else if(health>0)
     {
         setPlainText("Health: " + QString::number(health));
     }

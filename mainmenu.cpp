@@ -4,6 +4,7 @@
 
 Mainmenu::Mainmenu()
 {
+
      //create secene
     mainmenu_scene = new QGraphicsScene();
     mainmenu_scene->setSceneRect(0, 0, 800, 600);// make the secen 600*700 instead of infinity by infinity

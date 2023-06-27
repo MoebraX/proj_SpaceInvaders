@@ -12,6 +12,7 @@
         <file>assets/shalvar_sqare_X.png</file>
         <file>assets/shalvar_sqare_XX.png</file>
         <file>assets/shalvar_sqare_XXX.png</file>
+        <file>assets/GameOver.wav</file>
     </qresource>
     <qresource prefix="/Images">
         <file>Background.png</file>

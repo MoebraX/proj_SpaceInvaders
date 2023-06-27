@@ -9,7 +9,7 @@
 #include <QList>
 #include <QRandomGenerator>
 
-Endscreen::Endscreen()
+Endscreen::Endscreen(bool iswin)
 {
 
 }

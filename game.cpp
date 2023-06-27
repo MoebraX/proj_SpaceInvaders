@@ -66,53 +66,61 @@ Game::Game()
 
     //spawn enemies
     spawnEnemies();
-    QTimer* thisTimer= new QTimer;
-    connect(thisTimer ,SIGNAL(timeout()) ,this, SLOT(enemiesShoot()));
-    thisTimer->start(1000);
+    enemyshoot_timer= new QTimer;
+    connect(enemyshoot_timer ,SIGNAL(timeout()) ,this, SLOT(enemiesShoot()));
+    enemyshoot_timer->start(1000);
 
     //spawn Bricks
     spawnBricks();
 
-    //play background
+    //wire musicbox and play background music
     QMediaPlayer *  music = new QMediaPlayer();
     QAudioOutput* audioOutput = new QAudioOutput;
     music->setAudioOutput(audioOutput);
+    audioOutput->setVolume(0.3);
     music->setSource(QUrl("qrc:/sounds/assets/space invaders - loop.ogg"));
     music->play();
-    //qDebug() << "Background music state:" << music->mediaStatus();
-
 }
 
 void Game::displayGameover()
 {
-    this->close();
-    Endscreen* endscreen= new Endscreen;
-    this->deleteLater();
-/*
-    //create gameover text
-    QGraphicsTextItem *titleText = new QGraphicsTextItem(QString("Game Over"));
-    QFont titleFont("comic sans", 50);
-    titleText->setFont(titleFont);
-    titleText->setDefaultTextColor(Qt::yellow);
+    enemyshoot_timer->stop();
+    QMediaPlayer *  music = new QMediaPlayer();
+    QAudioOutput* audioOutput = new QAudioOutput;
+    music->setAudioOutput(audioOutput);
+    music->setSource(QUrl("qrc:/sounds/assets/GameOver.wav"));
+    music->play();
+
+    //Black Screen
+    QGraphicsRectItem *black = new QGraphicsRectItem(sceneRect());
+    black->setBrush(QBrush(Qt::black));
+    scene->addItem(black);
+    //black->setFlag(QGraphicsItem::ItemIsFocusable);
+    //black->setFocus();
+
+    //GameOver text
+    int fontId = QFontDatabase::addApplicationFont(":/fonts/pixel.ttf");
+    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+    QFont font(fontFamily);
+    font.setPointSize(50);
+    QGraphicsTextItem *titleText = new QGraphicsTextItem(QString("Game\nOver"));
+    titleText->setFont(font);
+    titleText->setDefaultTextColor(Qt::red);
     int xTitlePos = this->width()/2 - titleText->boundingRect().width()/2;
-    int yTitlePos = 150;
+    int yTitlePos = 300;
     titleText->setPos(xTitlePos-10, yTitlePos-50);
     scene->addItem(titleText);
-    QGraphicsTextItem *text = new QGraphicsTextItem(QString("Press Space to return to home screen"));
-    text->setFont(QFont("comic sans", 20));
-    text->setDefaultTextColor((Qt::white));
-    text->setPos(xTitlePos,yTitlePos + 20);
-    scene->addItem(text);
+    //titleText->setFlag(QGraphicsItem::ItemIsFocusable);
+   // titleText->setFocus();
+    QTimer::singleShot(5000, this, SLOT(gameoverSlot()));
+}
 
-    //Close the window
-    //TO DO: press key = close
-    QTime dieTime= QTime::currentTime().addSecs(1);
-    while (QTime::currentTime() < dieTime)
-        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
-    Mainmenu* mainmenu;
-    mainmenu=new Mainmenu;
-    mainmenu->show();
-    delete this;*/
+
+void Game::gameoverSlot()
+{
+    this->close();
+    Mainmenu* mainmenu = new Mainmenu;
+    this->deleteLater();
 }
 
 

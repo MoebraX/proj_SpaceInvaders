@@ -12,7 +12,8 @@ class Endscreen : public QGraphicsView
 {
     Q_OBJECT
 public:
-    Endscreen();
+    Endscreen(bool iswin);
+    //int score;
 
 signals:
 

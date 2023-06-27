@@ -74,7 +74,7 @@ void Enemy::shoot()
 {
     EnemyBullet* bullet = new EnemyBullet(":/Images/bullet.png");
     connect(bullet, SIGNAL(decreaseHealth()), this, SLOT(decreaseHealthConnectorSlot()));
-    bullet->setPos(x(), y());
+    bullet->setPos(x() + 25 , y());
     scene()->addItem(bullet);
     //connect(bullet, SIGNAL(hit()), this, SLOT(bulletHit()));
 

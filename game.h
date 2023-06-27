@@ -2,30 +2,28 @@
 #define GAME_H
 
 #include "mainwindow.h"
-
-#include <QApplication>
-#include <QGraphicsScene>
 #include "player.h"
+#include "health.h"
+#include "score.h"
+
 #include <QGraphicsView>
 #include <QTimer>
 #include <QWidget>
-#include "health.h"
-#include "score.h"
+#include <QApplication>
+#include <QGraphicsScene>
 
 class Game : public QGraphicsView
 {
     Q_OBJECT
 public:
     Game();
-
-    void displayGameover();
     void spawnEnemies();
     void spawnAStackOfBricks(int x, int y, int len);
     void spawnBricks();
 
     template<typename T>
     void chooseShooter(QList<T*> available_aliens, int chance);
-    //void displaySettingsMenu();
+
 
     QGraphicsScene * scene;
     Player *player;
@@ -37,6 +35,7 @@ public:
 public slots:
     void enemiesShoot();
     void decreaseHealthConnectorSlot();
+    void displayGameover();
 
 signals:
     void decreaseHealthConnectorSignal();

@@ -66,8 +66,8 @@ Mainmenu::Mainmenu()
 void Mainmenu::start()
 {
     this->close();
-    Game* newgame;
-    newgame = new Game;
+    Game* newgame = new Game;
+    this->deleteLater();
 }
 
 void Mainmenu::quit()

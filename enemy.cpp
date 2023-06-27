@@ -23,7 +23,6 @@ Enemy::Enemy (int x, int y, QGraphicsItem *parent ) : QObject(), QGraphicsPixmap
     //connect
     QTimer * timer = new QTimer(this );
     connect(timer,SIGNAL(timeout()), this, SLOT(move()));
-
     timer->start(1000);
 }
 

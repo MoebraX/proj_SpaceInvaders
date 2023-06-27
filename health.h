@@ -16,9 +16,12 @@ public:
 public slots:
     void decreaseSlot();
 
+
+signals:
+    void gameover();
+
 private:
     int health;
-    bool gameover();
 
 };
 

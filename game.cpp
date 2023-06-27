@@ -7,6 +7,7 @@
 #include <QList>
 #include <QRandomGenerator>
 
+#include <endscreen.h>
 #include "game.h"
 #include "button.h"
 #include "enemy.h"
@@ -33,6 +34,7 @@ Game::Game()
 
     health = new Health();
     connect(this, SIGNAL(decreaseHealthConnectorSignal()), health, SLOT(decreaseSlot()));
+    connect(health, SIGNAL(gameover()), this, SLOT(displayGameover()));
     health->setPos(health->x(), health->y() + 25);
     scene->addItem(health);
 
@@ -73,21 +75,20 @@ Game::Game()
 
     //play background
     QMediaPlayer *  music = new QMediaPlayer();
-
     QAudioOutput* audioOutput = new QAudioOutput;
     music->setAudioOutput(audioOutput);
-
     music->setSource(QUrl("qrc:/sounds/assets/space invaders - loop.ogg"));
-
     music->play();
-
-
-    qDebug() << "Background music state:" << music->mediaStatus();
+    //qDebug() << "Background music state:" << music->mediaStatus();
 
 }
 
 void Game::displayGameover()
 {
+    this->close();
+    Endscreen* endscreen= new Endscreen;
+    this->deleteLater();
+/*
     //create gameover text
     QGraphicsTextItem *titleText = new QGraphicsTextItem(QString("Game Over"));
     QFont titleFont("comic sans", 50);
@@ -111,65 +112,8 @@ void Game::displayGameover()
     Mainmenu* mainmenu;
     mainmenu=new Mainmenu;
     mainmenu->show();
-    delete this;
-
-   /* // create "Retry" button
-    Button *retryButton = new Button(QString("Retry"));
-    int xRetryPos = this->width()/2 - retryButton->boundingRect().width()/2;
-    int yRetryPos = 275;
-    retryButton->setPos(xRetryPos, yRetryPos);
-    connect(retryButton, SIGNAL(clicked()), this, SLOT(start()));
-    scene->addItem(retryButton);
-
-    Button *settingsButton = new Button(QString("Settings"));
-    int xSettingsPos = this->width()/2 - settingsButton->boundingRect().width()/2;
-    int ySettingsPos = 350;
-    settingsButton->setPos(xSettingsPos, ySettingsPos);
-    connect(settingsButton, SIGNAL(clicked()), this, SLOT(displaySettingsMenu()));
-    scene->addItem(settingsButton);
-
-    // create quit button
-    Button *quitButton = new Button(QString("Quit"));
-    int xQuitPos = this->width()/2 - quitButton->boundingRect().width()/2;
-    int yQuitPos = 425;
-    quitButton->setPos(xQuitPos, yQuitPos);
-    connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
-    scene->addItem(quitButton);
-*/
-
-
+    delete this;*/
 }
-
-/*void Game::displaySettingsMenu()
-{
-
-    // clean up the screen
-    scene->clear();
-
-    // create "Settings" text
-    QGraphicsTextItem *titleText = new QGraphicsTextItem(QString("Settings"));
-    QFont titleFont("comic sans", 50);
-    titleText->setFont(titleFont);
-    int xTitlePos = this->width()/2 - titleText->boundingRect().width()/2;
-    int yTitlePos = 150;
-    titleText->setPos(xTitlePos, yTitlePos);
-    scene->addItem(titleText);
-
-    // TO DO: List to select different resolution versions (480p, 720p, 1080p)
-
-    // TO DO: Re-bind keys
-
-    // TO DO: Replace "quit" button with a "back" button
-
-    // create quit button
-    Button *quitButton = new Button(QString("Quit"));
-    int xQuitPos = this->width()/2 - quitButton->boundingRect().width()/2;
-    int yQuitPos = 425;
-    quitButton->setPos(xQuitPos, yQuitPos);
-    connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
-    scene->addItem(quitButton);
-
-}*/
 
 
 void Game::spawnEnemies()

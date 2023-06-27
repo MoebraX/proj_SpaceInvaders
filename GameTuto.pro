@@ -19,6 +19,7 @@ SOURCES += \
     brick.cpp \
     bullet.cpp \
     button.cpp \
+    endscreen.cpp \
     enemy.cpp \
     enemybullet.cpp \
     game.cpp \
@@ -33,6 +34,7 @@ HEADERS += \
     brick.h \
     bullet.h \
     button.h \
+    endscreen.h \
     enemy.h \
     enemybullet.h \
     game.h \

@@ -13,8 +13,6 @@ EnemyBullet::EnemyBullet(QString sprite=":/Images/bullet.png")
     //draw graphics
     QPixmap originalPixmap(sprite);
 
-
-
     // Rotate the pixmap by 180 degrees
     QTransform transform;
     transform.rotate(180);
@@ -26,11 +24,9 @@ EnemyBullet::EnemyBullet(QString sprite=":/Images/bullet.png")
     // Set the resized pixmap as the image for QGraphicsPixmapItem
     setPixmap(resizedPixmap);
 
-
-
     timer = new QTimer;
     connect(timer, SIGNAL(timeout()), this, SLOT(move()));
-    timer->start(50);
+    timer->start(25);
 }
 
 void EnemyBullet::move()

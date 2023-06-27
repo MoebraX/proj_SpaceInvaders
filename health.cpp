@@ -4,12 +4,9 @@
 #include "game.h"
 #include <QFontDatabase>
 
-extern Game *game;
-
 Health::Health()
 {
     health = 3;
-
     setPlainText("Health: " + QString::number(health));
     setDefaultTextColor(Qt::green);
 
@@ -24,9 +21,9 @@ Health::Health()
 void Health::decrease()
 {
     health--;
-    if(gameover())
+    if(health==0)
     {
-        game->displayGameover();
+        emit gameover();
     }
     else
     {
@@ -38,11 +35,6 @@ void Health::decrease()
 int Health::getHealth()
 {
     return health;
-}
-
-bool Health::gameover()
-{
-    return health < 1;
 }
 
 void Health::decreaseSlot()

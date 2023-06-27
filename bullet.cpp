@@ -27,19 +27,32 @@ void Bullet::move()
         Enemy* hit_enemy = dynamic_cast<Enemy*>(i);
         if(hit_enemy    != nullptr)
         {
-            //emit signal to decrease enemy's health
+            //decrease enemy's health
             if(hit_enemy->health>1)
                 hit_enemy->health--;
 
 
-            //remove enemy and bullet from heap memory
+            //remove enemy from heap memory and related QList
             else{
-                emit increaseScore(hit_enemy->score_value);
                 scene()->removeItem(hit_enemy);
+                int index=AlienBug::all_Bugs.indexOf(static_cast<AlienBug*>(hit_enemy));
+                if(index!=-1)
+                {
+                    AlienBug::all_Bugs.takeAt(index);
+                }
+                else
+                {
+                    int index=AlienOkhtapoos::all_Okhtapooses.indexOf(static_cast<AlienOkhtapoos*>(hit_enemy));
+                    if(index!=-1)
+                    {
+                        AlienOkhtapoos::all_Okhtapooses.takeAt(index);
+                    }
+                }
+                emit increaseScore(hit_enemy->score_value);
                 delete hit_enemy;
                 scene()->removeItem(this);
-                emit hitEnemy();
             }
+            emit hitEnemy();
         }
 
     }

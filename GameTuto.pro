@@ -19,6 +19,7 @@ SOURCES += \
     bullet.cpp \
     button.cpp \
     enemy.cpp \
+    enemybullet.cpp \
     game.cpp \
     health.cpp \
     main.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     bullet.h \
     button.h \
     enemy.h \
+    enemybullet.h \
     game.h \
     health.h \
     mainmenu.h \

@@ -2,8 +2,10 @@
 #include <QGraphicsScene>
 #include <QFont>
 #include "game.h"
+
 extern Game *game;
-Health::Health(QGraphicsItem *parent): QGraphicsTextItem(parent)
+
+Health::Health()
 {
     health = 3;
 
@@ -34,4 +36,10 @@ int Health::getHealth()
 bool Health::gameover()
 {
     return health < 1;
+}
+
+void Health::decreaseSlot()
+{
+    qDebug() << "health slot";
+    this->decrease();
 }

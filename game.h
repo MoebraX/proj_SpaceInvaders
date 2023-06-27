@@ -20,6 +20,8 @@ public:
 
     void displayGameover();
     void spawnEnemies();
+    template<typename T>
+    bool chooseShooter(int target_x, QList<T*> available_aliens);
     //void displaySettingsMenu();
 
     QGraphicsScene * scene;
@@ -30,9 +32,11 @@ public:
     int sceneHeight;
 
 public slots:
+    void enemiesShoot(int target_x);
+    void decreaseHealthConnectorSlot();
 
-
-
+signals:
+    void decreaseHealthConnectorSignal();
 
 };
 

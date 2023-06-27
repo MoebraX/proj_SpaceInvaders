@@ -8,6 +8,7 @@
 #include <QGraphicsItem>
 #include<QString>
 #include <QTimer>
+#include <QList>
 
 class Enemy : public QObject ,  public QGraphicsPixmapItem
 {
@@ -23,26 +24,29 @@ public:
     int movement_counter=0;
 
     void setSprite(QString address);
+    void shoot();
 
 private:
 
 public slots:
     void move();
-
-
+    void decreaseHealthConnectorSlot();
 signals:
     void destroyed(int point);
+    void decreaseHealthConnectorSignal();
 };
 
 
 class AlienKachal : public Enemy
 {
+
 public:
+
     AlienKachal(int x=0, int y=0)
     {
         setSprite(":/Images/assets/Alien_Kachal_01__white.png");
         health=1;
-        score_value=1;
+        score_value=10;
         pos_x=x;
         pos_y=y;
         initial_x=x;
@@ -63,11 +67,12 @@ public:
 class AlienBug : public Enemy
 {
 public:
+    static inline QList<AlienBug*> all_Bugs;
     AlienBug(int x=0, int y=0)
     {
         setSprite(":/Images/assets/Alien_Bug_01__white.png");
         health=1;
-        score_value=1;
+        score_value=20;
         pos_x=x;
         pos_y=y;
         initial_x=x;
@@ -82,17 +87,21 @@ public:
 
         // Set the resized pixmap as the image for QGraphicsPixmapItem
         setPixmap(resizedPixmap);
+
+        all_Bugs.append(this);
     }
 };
 
 class AlienOkhtapoos : public Enemy
 {
 public:
+    static inline QList<AlienOkhtapoos*> all_Okhtapooses;
+
     AlienOkhtapoos(int x=0, int y=0)
     {
         setSprite(":/Images/assets/Alien_Okhtapoos_01__white.png");
         health=1;
-        score_value=1;
+        score_value=40;
         pos_x=x;
         pos_y=y;
         initial_x=x;
@@ -107,6 +116,8 @@ public:
 
         // Set the resized pixmap as the image for QGraphicsPixmapItem
         setPixmap(resizedPixmap);
+
+        all_Okhtapooses.append(this);
     }
 };
 

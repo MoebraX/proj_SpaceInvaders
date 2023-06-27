@@ -4,6 +4,8 @@
 #include <QImage>
 #include <QAudioOutput>
 #include <QTime>
+#include <QList>
+#include <QRandomGenerator>
 
 #include "game.h"
 #include "button.h"
@@ -29,6 +31,7 @@ Game::Game()
     scene->addItem(score);
 
     health = new Health();
+    connect(this, SIGNAL(decreaseHealthConnectorSignal()), health, SLOT(decreaseSlot()));
     health->setPos(health->x(), health->y() + 25);
     scene->addItem(health);
 
@@ -41,7 +44,7 @@ Game::Game()
     player->setFlag(QGraphicsItem::ItemIsFocusable);
     player->setFocus();
 
-    // add to the senec
+    // add to the scene
     scene->addItem(player);
 
     // add view
@@ -61,6 +64,10 @@ Game::Game()
 
     //spawn enemies
     spawnEnemies();
+    QTimer* thisTimer= new QTimer;
+    connect(thisTimer ,SIGNAL(timeout()) ,player ,SLOT(enemyTimeToShootSlot()));
+    connect(player, SIGNAL(enemyTimeToShootSignal(int)), this, SLOT(enemiesShoot(int)));
+    thisTimer->start(900);
 
     //play background
     QMediaPlayer *  music = new QMediaPlayer();
@@ -192,6 +199,8 @@ void Game::spawnEnemies()
     scene->addItem(kachal10);
     AlienKachal* kachal11 = new AlienKachal(x+10*(distance+len),5*y);
     scene->addItem(kachal11);
+
+
     //
     AlienKachal* kachal12 = new AlienKachal(x,4*y);
     scene->addItem(kachal12);
@@ -239,6 +248,8 @@ void Game::spawnEnemies()
     scene->addItem(bug10);
     AlienBug* bug11 = new AlienBug(x+10*(distance+len),3*y);
     scene->addItem(bug11);
+
+    //AlienBug::all_Bugs_downrow={bug1,bug2};
     //
     AlienBug* bug12 = new AlienBug(x,2*y);
     scene->addItem(bug12);
@@ -286,12 +297,70 @@ void Game::spawnEnemies()
     scene->addItem(okhtapoos10);
     AlienOkhtapoos* okhtapoos11 = new AlienOkhtapoos(x+10*(distance+len),y);
     scene->addItem(okhtapoos11);
+}
 
-    //AlienBug* bug1 = new AlienBug(200,240);
-    //scene->addItem(bug1);
-    //AlienOkhtapoos* okhtapoos1 = new AlienOkhtapoos(200,260);
-    //scene->addItem(okhtapoos1);
+template<typename T>
+bool Game::chooseShooter(int target_x, QList<T*> available_aliens)
+{
+    int randomNumber = QRandomGenerator::global()->bounded(3);
+    if(randomNumber%3 == 0)
+    {
+        randomNumber = QRandomGenerator::global()->bounded(available_aliens.size());
+        connect(available_aliens[randomNumber], SIGNAL(decreaseHealthConnectorSignal()), this, SLOT(decreaseHealthConnectorSlot()));
+        available_aliens[randomNumber]->shoot();
+        return true;
+    }
+    else
+        return false;
+}
 
+void Game::enemiesShoot(int target_x)
+{
+    qDebug() << "Executed enemiesShoot";
+    bool result;
+    //2 bar call kardane chooseShooter, baraye Bug ha va Okhtapoos ha.
+    //Algorithm shoot be in soorat ast ke dar har baze zamani, agar
+    //khosh shans bashim va chooseShooter ejra shavad, in shans
+    //vojood darad ke dobare ham ba shans nesf yek enemy be soorate
+    //random shoot konad. In stack edame peyda mikonad ta zamani ke
+    //khosh shans nabashim.
+    while(true)
+    {
+        result=chooseShooter(target_x, AlienBug::all_Bugs);
+        if(result==true)
+        {
+            int randomNumber = QRandomGenerator::global()->bounded(6);
+            if(randomNumber%6==0)
+            {
+                int randomNumber = QRandomGenerator::global()->bounded(AlienBug::all_Bugs.size());
+                AlienBug::all_Bugs[randomNumber]->shoot();
+            }
+            else
+                break;
+        }
+        else
+            break;
+    }
+    while(true)
+    {
+        result=chooseShooter(target_x,AlienOkhtapoos::all_Okhtapooses);
+        if(result==true)
+        {
+            int randomNumber = QRandomGenerator::global()->bounded(6);
+            if(randomNumber%6==0)
+            {
+                int randomNumber = QRandomGenerator::global()->bounded(AlienOkhtapoos::all_Okhtapooses.size());
+                AlienOkhtapoos::all_Okhtapooses[randomNumber]->shoot();
+            }
+            else
+                break;
+        }
+        else
+            break;
+    }
+}
 
-
+void Game::decreaseHealthConnectorSlot()
+{
+    emit decreaseHealthConnectorSignal();
 }

@@ -1,8 +1,11 @@
 #include "enemy.h"
 #include <QList>
 #include <stdlib.h>
-
+#include <QRandomGenerator>
 #include "game.h"
+#include "bullet.h"
+#include "enemybullet.h"
+
 extern Game *game;
 Enemy::Enemy (int x, int y, QGraphicsItem *parent ) : QObject(), QGraphicsPixmapItem()
 {
@@ -65,4 +68,20 @@ void Enemy::move()
             movement_counter++;
         }
     }
+}
+
+void Enemy::shoot()
+{
+    qDebug() << "started shooting";
+    EnemyBullet* bullet = new EnemyBullet(":/Images/bullet.png");
+    connect(bullet, SIGNAL(decreaseHealth()), this, SLOT(decreaseHealthConnectorSlot()));
+    bullet->setPos(x(), y());
+    scene()->addItem(bullet);
+    //connect(bullet, SIGNAL(hit()), this, SLOT(bulletHit()));
+
+}
+
+void Enemy::decreaseHealthConnectorSlot()
+{
+    emit decreaseHealthConnectorSignal();
 }

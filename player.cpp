@@ -49,18 +49,7 @@ void Player::keyPressEvent(QKeyEvent *event)
         if(pos().x() + 100 < 800)
          setPos(x() + 10, y());
     }
-   /* else if( event->key() == Qt::Key_Up)
-    {
-        if(pos().y() > 0)
-        setPos(x(), y() - 10);
-        bullet->setPos(x(), y());
-    }
-    else if( event->key() == Qt::Key_Down)
-    {
-        if(pos().y() + 100 < 600)
-        setPos(x(), y() + 10);
-        bullet->setPos(x(), y());
-    }*/
+
     else if(event->key() == Qt::Key_Space)
     {
         //emit testsignal();
@@ -102,4 +91,9 @@ void Player::bulletHit()
 {
     bullettimer->stop();
     bullet->flag=true;
+}
+
+void Player::enemyTimeToShootSlot()
+{
+    emit enemyTimeToShootSignal(x());
 }

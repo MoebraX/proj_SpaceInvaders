@@ -2,6 +2,7 @@
 #include <QGraphicsTextItem>
 #include <QBrush>
 #include <QFontDatabase>
+
 Button::Button(QString name, QGraphicsItem *parent): QGraphicsRectItem(parent)
 {
     setRect(0, 0, 200, 50);
@@ -13,7 +14,7 @@ Button::Button(QString name, QGraphicsItem *parent): QGraphicsRectItem(parent)
     // Draw text
     text = new QGraphicsTextItem(name, this);
     QFont font;
-    int fontId = QFontDatabase::addApplicationFont(":/fonts/THUNDERSTRIKECOND.TTF");
+    int fontId = QFontDatabase::addApplicationFont(":/fonts/pixel.ttf");
     QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
     font.setFamily(fontFamily);
     font.setPointSize(12); // Adjust the font size to your preference
@@ -34,7 +35,7 @@ void Button::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
-    brush.setColor(Qt::darkGreen); // Adjust the color to your preference
+    brush.setColor(Qt::black); // Adjust the color to your preference
     setBrush(brush);
     QFont font = text->font();
     font.setPointSize(14); // Increase the font size when hovering

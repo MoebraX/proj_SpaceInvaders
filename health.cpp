@@ -2,12 +2,7 @@
 #include <QGraphicsScene>
 #include <QFont>
 #include "game.h"
-
-<<<<<<< HEAD
-
-=======
 #include <QFontDatabase>
->>>>>>> d32ac1d8421affae453c13fa6fc8f3e7d947303c
 
 extern Game *game;
 
